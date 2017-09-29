@@ -1,5 +1,6 @@
 My fork of dwm
-- My patch 4statusevents applied and synchronized with the icons of myslstatus. My statusbar looks like 
+My patch 4statusevents applied and synchronized with the icons of myslstatus. 
+- My statusbar looks like 
 ⚡▃ @▃ C▁ R▃ ♫▇  29.09.  14:43
 - Clicking on the Date will open orage-callender.
 - Scrolling over the ♫▇ will change the volume. Clicking will open pavucontrol.
