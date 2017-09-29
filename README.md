@@ -6,7 +6,7 @@ I find bars easier to percive and they take up less space.
 ⚡▃ @▃ C▁ R▃ ♫▇  29.09.  14:43
 - Clicking on the Date will open orage-callender.
 - Scrolling over the ♫▇ will change the volume. Clicking will open pavucontrol.
-- Scrolling over the C▁ R▃ will change the screenbrightness. Clicking will open a terminal.
+- Scrolling over the C▁ R▃ will change the screens brightness. Clicking will open a terminal.
 - The batteryicon will only show if my computer is unplugged.
 - Clicking on @▃ will open wpa_gui to connect with wifi-networks.
 
