@@ -153,9 +153,9 @@ static Key keys[] = {
 /* click can be ClkLtSymbol, ClkStatusText{1,2,3,4}, ClkWinTitle, ClkClientWin, or ClkRootWin */
 
 /* Position of ClkStatusText{1,2,3,4} in Pixel from the right side of the monitor */
-int Text1 = 128; /* e.g. Date  */
-int Text2 = 155; /* e.g. Sound */
-int Text3 = 202; /* e.g. Sys   */
+int Text1 = 96; /* e.g. Date  */
+int Text2 = 121; /* e.g. Sound */
+int Text3 = 169; /* e.g. Sys   */
 /*  Text4 is everythig right from Text3 */
 
 static Button buttons[] = {
