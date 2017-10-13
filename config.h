@@ -12,7 +12,7 @@ static const char sol_cybri[]       = "#2aa198"; /*was #eeeeee, white*/
 static const char sol_base03[]      = "#002b36"; /*Solarized dark background, was "#005577"*/
 static const char sol_greybg[]      = "#073642";
 static const char *colors[][3]      = {
-	/*               fg          bg          border   */
+	/*               fg         bg         border   */
 	[SchemeNorm] = { sol_base00, sol_greybg, sol_greybg },/*sol_base00, sol_base03, col_gray2*/
 	[SchemeSel]  = { sol_cybri,  sol_base03, sol_cybri  },/*was sol_cybri, sol_base03, sol_base03*/
 };
@@ -60,7 +60,7 @@ static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() 
 static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
 static const char *termcmd[]     = { "urxvt", NULL };
 static const char *termrgcmd[]   = { "urxvt", "-e", "ranger" };
-static const char *firefoxcmd[]  = { "firefox", NULL };
+static const char *firefoxcmd[]  = { "firefox-nightly", NULL };
 static const char *chromcmd[]    = { "chromium", "-incognito", NULL };
 static const char *pidgincmd[]   = { "pidgin", NULL };
 static const char *nemocmd[]     = { "nemo", NULL };
@@ -71,7 +71,7 @@ static const char *lockcmd[]     = { "slock", NULL };
 static const char *appcmd[]      = { "xfce4-appfinder", NULL };
 static const char *clipcmd[]     = { "clipmenu", NULL };
 static const char *calendarcmd[] = { "orage", NULL };
-static const char *wlancmd[]     = { "wpa_gui", NULL };
+static const char *wificmd[]     = { "urxvt", "-e", "sudo", "wifi-menu", NULL };
 static const char *pavucmd[]     = { "pavucontrol", NULL };
 
 static const char *upvol[]   = { "amixer", "set", "Master", "5%+",     NULL };
@@ -101,14 +101,14 @@ static Key keys[] = {
 	{ MODKEY,                         XK_e,      spawn,          {.v = nemocmd    } },
 	{ Mod1Mask,                       XK_i,      spawn,          {.v = clipcmd    } },
 	{ MODKEY,                         XK_F12,    spawn,          {.v = upvol      } },//Volume
-	{ MODKEY,                         XK_F11,    spawn,          {.v = downvol    } },
-	{ 0,                              0x1008ff13,spawn,          {.v = upvol      } },
-	{ 0,                              0x1008ff11,spawn,          {.v = downvol    } },
-	{ 0,                              XK_Print,  spawn,          {.v = screenshotcmd} },
-	{ ControlMask|Mod1Mask,           XK_s,      spawn,          {.v = screenshoticmd} },
-	{ MODKEY,                         XK_F10,    spawn,          {.v = mutevol    } },
-	{ 0,                              0x1008ff02,spawn,          {.v = upbri      } },//Brightness
-	{ 0,                              0x1008ff03,spawn,          {.v = downbri    } },
+    	{ MODKEY,                         XK_F11,    spawn,          {.v = downvol    } },
+    	{ 0,                              0x1008ff13,spawn,          {.v = upvol      } },
+    	{ 0,                              0x1008ff11,spawn,          {.v = downvol    } },
+    	{ 0,                              XK_Print,  spawn,          {.v = screenshotcmd} },
+    	{ ControlMask|Mod1Mask,           XK_s,      spawn,          {.v = screenshoticmd} },
+    	{ MODKEY,                         XK_F10,    spawn,          {.v = mutevol    } },
+    	{ 0,                              0x1008ff02,spawn,          {.v = upbri      } },//Brightness
+    	{ 0,                              0x1008ff03,spawn,          {.v = downbri    } },
 	{ ControlMask|Mod1Mask|ShiftMask, XK_o,      spawn,          {.v = poweroffcmd} },//Systemcommands
 	{ ControlMask|Mod1Mask|ShiftMask, XK_r,      spawn,          {.v = rebootcmd  } },
 	{ ShiftMask|Mod1Mask|ControlMask, XK_s,      spawn,          {.v = suspendcmd } },
@@ -150,13 +150,11 @@ static Key keys[] = {
 };
 
 /* button definitions */
-/* click can be ClkLtSymbol, ClkStatusText{1,2,3,4}, ClkWinTitle, ClkClientWin, or ClkRootWin */
-
-/* Position of ClkStatusText{1,2,3,4} in Pixel from the right side of the monitor */
-int Text1 = 96; /* e.g. Date  */
-int Text2 = 121; /* e.g. Sound */
-int Text3 = 169; /* e.g. Sys   */
-/*  Text4 is everythig right from Text3 */
+/* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+int Text1 = 96; // Date
+int Text2 = 121; // Sound
+int Text3 = 168; // Sys
+// Text4 is everything left of Text3
 
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
@@ -170,7 +168,7 @@ static Button buttons[] = {
 	{ ClkStatusText3,       0,              Button1,        spawn,          {.v = termcmd } },
 	{ ClkStatusText3,       0,              Button4,        spawn,          {.v = upbri } },
 	{ ClkStatusText3,       0,              Button5,        spawn,          {.v = downbri } },
-	{ ClkStatusText4,       0,              Button1,        spawn,          {.v = wlancmd } },
+	{ ClkStatusText4,       0,              Button1,        spawn,          {.v = wificmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },
