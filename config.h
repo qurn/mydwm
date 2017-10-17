@@ -33,7 +33,7 @@ static const Rule rules[] = {
 /* layout(s) */
 static const float mfact     = 0.55; /* factor of master area size [0.05..0.95] */
 static const int nmaster     = 1;    /* number of clients in master area */
-static const int resizehints = 1;    /* 1 means respect size hints in tiled resizals */
+static const int resizehints = 0;    /* 1 means respect size hints in tiled resizals */
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
@@ -101,14 +101,14 @@ static Key keys[] = {
 	{ MODKEY,                         XK_e,      spawn,          {.v = nemocmd    } },
 	{ Mod1Mask,                       XK_i,      spawn,          {.v = clipcmd    } },
 	{ MODKEY,                         XK_F12,    spawn,          {.v = upvol      } },//Volume
-    	{ MODKEY,                         XK_F11,    spawn,          {.v = downvol    } },
-    	{ 0,                              0x1008ff13,spawn,          {.v = upvol      } },
-    	{ 0,                              0x1008ff11,spawn,          {.v = downvol    } },
-    	{ 0,                              XK_Print,  spawn,          {.v = screenshotcmd} },
-    	{ ControlMask|Mod1Mask,           XK_s,      spawn,          {.v = screenshoticmd} },
-    	{ MODKEY,                         XK_F10,    spawn,          {.v = mutevol    } },
-    	{ 0,                              0x1008ff02,spawn,          {.v = upbri      } },//Brightness
-    	{ 0,                              0x1008ff03,spawn,          {.v = downbri    } },
+	{ MODKEY,                         XK_F11,    spawn,          {.v = downvol    } },
+	{ 0,                              0x1008ff13,spawn,          {.v = upvol      } },
+	{ 0,                              0x1008ff11,spawn,          {.v = downvol    } },
+	{ 0,                              XK_Print,  spawn,          {.v = screenshotcmd} },
+	{ ControlMask|Mod1Mask,           XK_s,      spawn,          {.v = screenshoticmd} },
+	{ MODKEY,                         XK_F10,    spawn,          {.v = mutevol    } },
+	{ 0,                              0x1008ff02,spawn,          {.v = upbri      } },//Brightness
+	{ 0,                              0x1008ff03,spawn,          {.v = downbri    } },
 	{ ControlMask|Mod1Mask|ShiftMask, XK_o,      spawn,          {.v = poweroffcmd} },//Systemcommands
 	{ ControlMask|Mod1Mask|ShiftMask, XK_r,      spawn,          {.v = rebootcmd  } },
 	{ ShiftMask|Mod1Mask|ControlMask, XK_s,      spawn,          {.v = suspendcmd } },
