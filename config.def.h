@@ -102,12 +102,20 @@ static Key keys[] = {
 
 /* button definitions */
 /* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+int Text1 = 128; // Date
+int Text2 = 155; // Sound
+int Text3 = 202; // Sys
+int Text4 = 233; // Wifi
+
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
 	{ ClkLtSymbol,          0,              Button1,        setlayout,      {0} },
 	{ ClkLtSymbol,          0,              Button3,        setlayout,      {.v = &layouts[2]} },
 	{ ClkWinTitle,          0,              Button2,        zoom,           {0} },
-	{ ClkStatusText,        0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText1,       0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText2,       0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText3,       0,              Button2,        spawn,          {.v = termcmd } },
+	{ ClkStatusText4,       0,              Button2,        spawn,          {.v = termcmd } },
 	{ ClkClientWin,         MODKEY,         Button1,        movemouse,      {0} },
 	{ ClkClientWin,         MODKEY,         Button2,        togglefloating, {0} },
 	{ ClkClientWin,         MODKEY,         Button3,        resizemouse,    {0} },

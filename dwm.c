@@ -62,11 +62,11 @@
 /* enums */
 enum { CurNormal, CurResize, CurMove, CurLast }; /* cursor */
 enum { SchemeNorm, SchemeSel }; /* color schemes */
-enum { NetSupported, NetWMName, NetWMState,
+enum { NetSupported, NetWMName, NetWMState, NetWMCheck,
        NetWMFullscreen, NetActiveWindow, NetWMWindowType,
        NetWMWindowTypeDialog, NetClientList, NetLast }; /* EWMH atoms */
 enum { WMProtocols, WMDelete, WMState, WMTakeFocus, WMLast }; /* default atoms */
-enum { ClkTagBar, ClkLtSymbol, ClkStatusText1, ClkStatusText2, ClkStatusText3, 
+enum { ClkTagBar, ClkLtSymbol, ClkStatusText1, ClkStatusText2, ClkStatusText3,
        ClkStatusText4, ClkWinTitle, ClkClientWin, ClkRootWin, ClkLast }; /* clicks */
 
 typedef union {
@@ -274,7 +274,7 @@ static Scm *scheme;
 static Display *dpy;
 static Drw *drw;
 static Monitor *mons, *selmon;
-static Window root;
+static Window root, wmcheckwin;
 
 /* configuration, allows nested code to access above variables */
 #include "config.h"
@@ -470,9 +470,9 @@ buttonpress(XEvent *e)
 		else if (ev->x > selmon->ww - TEXTW(stext)) {
 			if (ev->x > selmon->ww - Text1)
 				click = ClkStatusText1;
-			else if (ev->x > selmon->ww - Text2)
+			else if  (ev->x > selmon->ww - Text2)
 				click = ClkStatusText2;
-			else if (ev->x > selmon->ww - Text3)
+			else if  (ev->x > selmon->ww - Text3)
 				click = ClkStatusText3;
 			else
 				click = ClkStatusText4;
@@ -521,6 +521,7 @@ cleanup(void)
 		drw_cur_free(drw, cursor[i]);
 	for (i = 0; i < LENGTH(colors); i++)
 		free(scheme[i]);
+	XDestroyWindow(dpy, wmcheckwin);
 	drw_free(drw);
 	XSync(dpy, False);
 	XSetInputFocus(dpy, PointerRoot, RevertToPointerRoot, CurrentTime);
@@ -1542,24 +1543,9 @@ setfullscreen(Client *c, int fullscreen)
 	if (fullscreen && !c->isfullscreen) {
 		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
 			PropModeReplace, (unsigned char*)&netatom[NetWMFullscreen], 1);
-		c->isfullscreen = 1;
-		c->oldstate = c->isfloating;
-		c->oldbw = c->bw;
-		c->bw = 0;
-		c->isfloating = 1;
-		resizeclient(c, c->mon->mx, c->mon->my, c->mon->mw, c->mon->mh);
-		XRaiseWindow(dpy, c->win);
 	} else if (!fullscreen && c->isfullscreen){
 		XChangeProperty(dpy, c->win, netatom[NetWMState], XA_ATOM, 32,
 			PropModeReplace, (unsigned char*)0, 0);
-		c->isfullscreen = 0;
-		c->isfloating = c->oldstate;
-		c->bw = c->oldbw;
-		c->x = c->oldx;
-		c->y = c->oldy;
-		c->w = c->oldw;
-		c->h = c->oldh;
-		resizeclient(c, c->x, c->y, c->w, c->h);
 		arrange(c->mon);
 	}
 }
@@ -1598,6 +1584,7 @@ setup(void)
 {
 	int i;
 	XSetWindowAttributes wa;
+	Atom utf8string;
 
 	/* clean up any zombies immediately */
 	sigchld(0);
@@ -1614,6 +1601,7 @@ setup(void)
 	bh = drw->fonts->h + 2;
 	updategeom();
 	/* init atoms */
+	utf8string = XInternAtom(dpy, "UTF8_STRING", False);
 	wmatom[WMProtocols] = XInternAtom(dpy, "WM_PROTOCOLS", False);
 	wmatom[WMDelete] = XInternAtom(dpy, "WM_DELETE_WINDOW", False);
 	wmatom[WMState] = XInternAtom(dpy, "WM_STATE", False);
@@ -1622,6 +1610,8 @@ setup(void)
 	netatom[NetSupported] = XInternAtom(dpy, "_NET_SUPPORTED", False);
 	netatom[NetWMName] = XInternAtom(dpy, "_NET_WM_NAME", False);
 	netatom[NetWMState] = XInternAtom(dpy, "_NET_WM_STATE", False);
+	netatom[NetWMCheck] = XInternAtom(dpy, "_NET_SUPPORTING_WM_CHECK", False);
+	netatom[NetWMCheck] = XInternAtom(dpy, "_NET_SUPPORTING_WM_CHECK", False);
 	netatom[NetWMFullscreen] = XInternAtom(dpy, "_NET_WM_STATE_FULLSCREEN", False);
 	netatom[NetWMWindowType] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE", False);
 	netatom[NetWMWindowTypeDialog] = XInternAtom(dpy, "_NET_WM_WINDOW_TYPE_DIALOG", False);
@@ -1637,6 +1627,14 @@ setup(void)
 	/* init bars */
 	updatebars();
 	updatestatus();
+	/* supporting window for NetWMCheck */
+	wmcheckwin = XCreateSimpleWindow(dpy, root, 0, 0, 1, 1, 0, 0, 0);
+	XChangeProperty(dpy, wmcheckwin, netatom[NetWMCheck], XA_WINDOW, 32,
+		PropModeReplace, (unsigned char *) &wmcheckwin, 1);
+	XChangeProperty(dpy, wmcheckwin, netatom[NetWMName], utf8string, 8,
+		PropModeReplace, (unsigned char *) "dwm", 4);
+	XChangeProperty(dpy, root, netatom[NetWMCheck], XA_WINDOW, 32,
+		PropModeReplace, (unsigned char *) &wmcheckwin, 1);
 	/* EWMH support per view */
 	XChangeProperty(dpy, root, netatom[NetSupported], XA_ATOM, 32,
 		PropModeReplace, (unsigned char *) netatom, NetLast);
@@ -2059,8 +2057,7 @@ updatesizehints(Client *c)
 		c->maxa = (float)size.max_aspect.x / size.max_aspect.y;
 	} else
 		c->maxa = c->mina = 0.0;
-	c->isfixed = (c->maxw && c->minw && c->maxh && c->minh
-		&& c->maxw == c->minw && c->maxh == c->minh);
+	c->isfixed = (c->maxw && c->maxh && c->maxw == c->minw && c->maxh == c->minh);
 }
 
 void
