@@ -5,8 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "dejavu:size=10" };
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "dejavu:size=13" };
+static const char dmenufont[]       = "monospace:size=13";
 static const char sol_base00[]      = "#657b83"; /*was #bbbbbb, bright grey*/
 static const char sol_cybri[]       = "#2aa198"; /*was #eeeeee, white*/
 static const char sol_base03[]      = "#002b36"; /*Solarized dark background, was "#005577"*/
@@ -25,9 +25,9 @@ static const Rule rules[] = {
 	 *	WM_CLASS(STRING) = instance, class
 	 *	WM_NAME(STRING) = title
 	 */
-	/* class      instance title         tags mask     isfloating   monitor */
-	{ "Gimp",     NULL,    NULL,         0,            1,           -1 },
-	{ NULL,       NULL,    "Buddy-List", 1 << 8,       0,           -1 },
+	/* class      instance  title         tags mask     isfloating   monitor */
+	{ "Gimp",     NULL,     NULL,         0,            1,           -1 },
+	{ "Pidgin",   "Pidgin", "Buddy-List", 1 << 8,       0,           -1 },
 };
 
 /* layout(s) */
@@ -57,14 +57,16 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[] = { "dmenu_run", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
+static const char *dmenucmd[]    = { "/home/ffm/build/mytools/dmenu_recent.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
+//static const char *dmenucmd[]    = { "j4-dmenu-desktop", "--usage-log=~/.dmenulist", "--display-binary", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
+//static const char *dmenucmd[]    = { "j4-dmenu-desktop", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
 static const char *termcmd[]     = { "urxvt", NULL };
-static const char *termrgcmd[]   = { "urxvt", "-e", "ranger" };
+static const char *termrgcmd[]   = { "urxvt", "-e", "sh", "-c", "ranger; bash" };
 static const char *firefoxcmd[]  = { "firefox", NULL };
 static const char *chromcmd[]    = { "chromium", "-incognito", NULL };
 static const char *pidgincmd[]   = { "pidgin", NULL };
 static const char *nemocmd[]     = { "nemo", NULL };
-static const char *poweroffcmd[] = { "poweroff", NULL };
+static const char *poweroffcmd[] = { "tsp", "poweroff", NULL };
 static const char *rebootcmd[]   = { "reboot", NULL };
 static const char *suspendcmd[]  = { "pm-suspend", NULL };
 static const char *lockcmd[]     = { "slock", NULL };
@@ -80,8 +82,8 @@ static const char *mutevol[] = { "amixer", "set", "Master", "toggle", NULL };
 
 /*static const char *upbri[]   = { "xbacklight", "+10",     NULL };
 static const char *downbri[] = { "xbacklight", "-10",     NULL };*/
-static const char *upbri[]   = { "bash", "/home/ffm/build/backlight/upbri.sh",     NULL };
-static const char *downbri[] = { "bash", "/home/ffm/build/backlight/downbri.sh",   NULL };
+static const char *upbri[]   = { "bash", "/home/ffm/build/mytools/upbri.sh",     NULL };
+static const char *downbri[] = { "bash", "/home/ffm/build/mytools/downbri.sh",   NULL };
 
 static const char *screenshotcmd[] = { "gnome-screenshot", NULL };
 static const char *screenshoticmd[] = { "gnome-screenshot", "-i", NULL };
@@ -150,10 +152,10 @@ static Key keys[] = {
 };
 
 /* button definitions */
-/* click can be ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-int Text1 = 96; // Date
-int Text2 = 121; // Sound
-int Text3 = 168; // Sys
+/* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
+int Text1 = 116; // Date
+int Text2 = 149; // Sound
+int Text3 = 206; // Sys
 // Text4 is everything left of Text3
 
 static Button buttons[] = {
