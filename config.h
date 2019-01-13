@@ -63,6 +63,7 @@ static const char *dmenucmd[]    = { "/home/ffm/build/mytools/dmenu_recent.sh", 
 static const char *termcmd[]     = { "urxvt", NULL };
 static const char *termrgcmd[]   = { "urxvt", "-e", "sh", "-c", "ranger; bash" };
 static const char *firefoxcmd[]  = { "firefox", NULL };
+static const char *killfirefoxcmd[]  = { "killall", "-9", "firefox", NULL };
 static const char *chromcmd[]    = { "chromium", "-incognito", NULL };
 static const char *pidgincmd[]   = { "pidgin", NULL };
 static const char *nemocmd[]     = { "nemo", NULL };
@@ -93,6 +94,7 @@ static Key keys[] = {
 	{ MODKEY,                         XK_p,      spawn,          {.v = dmenucmd   } },//Programme
 	{ MODKEY|ShiftMask,               XK_Return, spawn,          {.v = termcmd    } },
 	{ ControlMask|Mod1Mask,           XK_f,      spawn,          {.v = firefoxcmd } },
+	{ ControlMask|Mod1Mask|ShiftMask, XK_f,      spawn,          {.v = killfirefoxcmd } },
 	{ ControlMask|Mod1Mask,           XK_c,      spawn,          {.v = chromcmd } },
 	{ ControlMask|Mod1Mask,           XK_p,      spawn,          {.v = pidgincmd  } },
 	{ ControlMask|Mod1Mask,           XK_t,      spawn,          {.v = termcmd    } },
@@ -157,6 +159,12 @@ int Text1 = 116; // Date
 int Text2 = 149; // Sound
 int Text3 = 206; // Sys
 // Text4 is everything left of Text3
+
+/* tower configuration
+int Text1 = 160; // Date
+int Text2 = 207; // Sound
+int Text3 = 288; // Sys
+*/
 
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
