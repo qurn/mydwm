@@ -58,7 +58,7 @@ static const Layout layouts[] = {
 
 /* commands */
 static char dmenumon[2] = "0"; /* component of dmenucmd, manipulated in spawn() */
-static const char *dmenucmd[]    = { "/home/ffm/build/mytools/dmenu_recent.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
+static const char *dmenucmd[]    = { "/home/ffm/.config/myscripts/dmenu_recent.sh", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
 //static const char *dmenucmd[]    = { "j4-dmenu-desktop", "--usage-log=~/.dmenulist", "--display-binary", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
 //static const char *dmenucmd[]    = { "j4-dmenu-desktop", "-m", dmenumon, "-fn", dmenufont, "-nb", sol_base03, "-nf", sol_base00, "-sb", sol_base03, "-sf", sol_cybri, NULL };
 static const char *termcmd[]     = { "urxvt", NULL };
