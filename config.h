@@ -5,8 +5,8 @@ static const unsigned int borderpx  = 1;        /* border pixel of windows */
 static const unsigned int snap      = 32;       /* snap pixel */
 static const int showbar            = 1;        /* 0 means no bar */
 static const int topbar             = 1;        /* 0 means bottom bar */
-static const char *fonts[]          = { "dejavu:size=10" }; /* tower 10 */
-static const char dmenufont[]       = "monospace:size=10";
+static const char *fonts[]          = { "dejavu:size=13" }; /* tower 10 */
+static const char dmenufont[]       = "monospace:size=13";
 static const char sol_base00[]      = "#657b83"; /*was #bbbbbb, bright grey*/
 static const char sol_cybri[]       = "#2aa198"; /*was #eeeeee, white*/
 static const char sol_base03[]      = "#002b36"; /*Solarized dark background, was "#005577"*/
@@ -38,7 +38,7 @@ static const int resizehints = 0;    /* 1 means respect size hints in tiled resi
 
 static const Layout layouts[] = {
 	/* symbol     arrange function */
-	{ "[]=",      tile },    /* first entry is default */
+	{ "┃ ┣━┫",    tile },    /* first entry is default */
 	{ "><>",      NULL },    /* no layout function means floating behavior */
 	{ "[M]",      monocle },
 	{ "|M|",      centeredmaster },
@@ -156,15 +156,18 @@ static Key keys[] = {
 
 /* button definitions */
 /* click can be ClkTagBar, ClkLtSymbol, ClkStatusText, ClkWinTitle, ClkClientWin, or ClkRootWin */
-// int Text1 = 116; // Date
-// int Text2 = 149; // Sound
-// int Text3 = 206; // Sys
+
+/* laptop configuration */
+int Text1 = 130; // Date
+int Text2 = 160; // Sound
+int Text3 = 220; // Sys
 // Text4 is everything left of Text3
 
-/* tower configuration */
+/* tower configuration
 int Text1 = 160; // Date
 int Text2 = 207; // Sound
 int Text3 = 288; // Sys
+*/
 
 static Button buttons[] = {
 	/* click                event mask      button          function        argument */
